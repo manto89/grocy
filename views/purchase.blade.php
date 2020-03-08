@@ -69,7 +69,7 @@
 				'id' => 'price',
 				'label' => 'Price',
 				'min' => 0,
-				'step' => 0.01,
+				'step' => 0.001,
 				'value' => '',
 				'hint' => $__t('in %s and based on the purchase quantity unit', GROCY_CURRENCY),
 				'invalidFeedback' => $__t('The price cannot be lower than %s', '0'),

@@ -66,9 +66,9 @@ Grocy.Components.ProductPicker.GetPicker().on('change', function(e)
 
 				if (productDetails.product.allow_partial_units_in_stock == 1)
 				{
-					$("#display_amount").attr("min", "0.01");
-					$("#display_amount").attr("step", "0.01");
-					$("#display_amount").parent().find(".invalid-feedback").text(__t('The amount cannot be lower than %s', 0.01.toLocaleString()));
+					$("#display_amount").attr("min", "0.001");
+					$("#display_amount").attr("step", "0.001");
+					$("#display_amount").parent().find(".invalid-feedback").text(__t('The amount cannot be lower than %s', 0.001.toLocaleString()));
 				}
 				else
 				{
@@ -138,8 +138,8 @@ $("#only_check_single_unit_in_stock").on("click", function()
 {
 	if (this.checked)
 	{
-		$("#display_amount").attr("min", "0.01");
-		$("#display_amount").attr("step", "0.01");
+		$("#display_amount").attr("min", "0.001");
+		$("#display_amount").attr("step", "0.001");
 		$("#display_amount").parent().find(".invalid-feedback").text(__t("This cannot be negative"));
 		Grocy.Components.ProductAmountPicker.AllowAnyQu(true);
 		Grocy.FrontendHelpers.ValidateForm("recipe-pos-form");

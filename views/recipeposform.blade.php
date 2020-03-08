@@ -78,7 +78,7 @@
 				'id' => 'price_factor',
 				'label' => 'Price factor',
 				'min' => 0,
-				'step' => 0.01,
+				'step' => 0.001,
 				'value' => '',
 				'hint' => $__t('The resulting price of this ingredient will be multiplied by this factor'),
 				'invalidFeedback' => $__t('This cannot be lower than %s', '0'),

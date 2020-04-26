@@ -25,7 +25,8 @@ class StockController extends BaseController
 			'nextXDays' => $nextXDays,
 			'productGroups' => $this->getDatabase()->product_groups()->orderBy('name'),
 			'userfields' => $this->getUserfieldsService()->GetFields('products'),
-			'userfieldValues' => $this->getUserfieldsService()->GetAllValues('products')
+			'userfieldValues' => $this->getUserfieldsService()->GetAllValues('products'),
+			'shoppingListItems' => $this->getDatabase()->shopping_list(),
 		]);
 	}
 
@@ -38,6 +39,7 @@ class StockController extends BaseController
 			'products' => $this->getDatabase()->products()->orderBy('name'),
 			'quantityunits' => $this->getDatabase()->quantity_units()->orderBy('name'),
 			'locations' => $this->getDatabase()->locations()->orderBy('name'),
+			'shoppinglocations' => $this->getDatabase()->shopping_locations()->orderBy('name'),
 			'stockEntries' => $this->getDatabase()->stock()->orderBy('product_id'),
 			'currentStockLocations' => $this->getStockService()->GetCurrentStockLocations(),
 			'nextXDays' => $nextXDays,
@@ -50,6 +52,7 @@ class StockController extends BaseController
 	{
 		return $this->renderPage($response, 'purchase', [
 			'products' => $this->getDatabase()->products()->orderBy('name'),
+			'shoppinglocations' => $this->getDatabase()->shopping_locations()->orderBy('name'),
 			'locations' => $this->getDatabase()->locations()->orderBy('name')
 		]);
 	}
@@ -76,6 +79,7 @@ class StockController extends BaseController
 	{
 		return $this->renderPage($response, 'inventory', [
 			'products' => $this->getDatabase()->products()->orderBy('name'),
+			'shoppinglocations' => $this->getDatabase()->shopping_locations()->orderBy('name'),
 			'locations' => $this->getDatabase()->locations()->orderBy('name')
 		]);
 	}
@@ -85,6 +89,7 @@ class StockController extends BaseController
 		return $this->renderPage($response, 'stockentryform', [
 			'stockEntry' => $this->getDatabase()->stock()->where('id', $args['entryId'])->fetch(),
 			'products' => $this->getDatabase()->products()->orderBy('name'),
+			'shoppinglocations' => $this->getDatabase()->shopping_locations()->orderBy('name'),
 			'locations' => $this->getDatabase()->locations()->orderBy('name')
 		]);
 	}
@@ -140,6 +145,15 @@ class StockController extends BaseController
 		]);
 	}
 
+	public function ShoppingLocationsList(\Psr\Http\Message\ServerRequestInterface $request, \Psr\Http\Message\ResponseInterface $response, array $args)
+	{
+		return $this->renderPage($response, 'shoppinglocations', [
+			'shoppinglocations' => $this->getDatabase()->shopping_locations()->orderBy('name'),
+			'userfields' => $this->getUserfieldsService()->GetFields('shopping_locations'),
+			'userfieldValues' => $this->getUserfieldsService()->GetAllValues('shopping_locations')
+		]);
+	}
+
 	public function ProductGroupsList(\Psr\Http\Message\ServerRequestInterface $request, \Psr\Http\Message\ResponseInterface $response, array $args)
 	{
 		return $this->renderPage($response, 'productgroups', [
@@ -166,6 +180,7 @@ class StockController extends BaseController
 			return $this->renderPage($response, 'productform', [
 				'locations' =>  $this->getDatabase()->locations()->orderBy('name'),
 				'quantityunits' =>  $this->getDatabase()->quantity_units()->orderBy('name'),
+				'shoppinglocations' => $this->getDatabase()->shopping_locations()->orderBy('name'),
 				'productgroups' => $this->getDatabase()->product_groups()->orderBy('name'),
 				'userfields' => $this->getUserfieldsService()->GetFields('products'),
 				'products' => $this->getDatabase()->products()->where('parent_product_id IS NULL')->orderBy('name'),
@@ -181,6 +196,7 @@ class StockController extends BaseController
 				'product' =>  $product,
 				'locations' =>  $this->getDatabase()->locations()->orderBy('name'),
 				'quantityunits' =>  $this->getDatabase()->quantity_units()->orderBy('name'),
+				'shoppinglocations' => $this->getDatabase()->shopping_locations()->orderBy('name'),
 				'productgroups' => $this->getDatabase()->product_groups()->orderBy('name'),
 				'userfields' => $this->getUserfieldsService()->GetFields('products'),
 				'products' => $this->getDatabase()->products()->where('id != :1 AND parent_product_id IS NULL', $product->id)->orderBy('name'),
@@ -206,6 +222,25 @@ class StockController extends BaseController
 				'location' =>  $this->getDatabase()->locations($args['locationId']),
 				'mode' => 'edit',
 				'userfields' => $this->getUserfieldsService()->GetFields('locations')
+			]);
+		}
+	}
+
+	public function ShoppingLocationEditForm(\Psr\Http\Message\ServerRequestInterface $request, \Psr\Http\Message\ResponseInterface $response, array $args)
+	{
+		if ($args['shoppingLocationId'] == 'new')
+		{
+			return $this->renderPage($response, 'shoppinglocationform', [
+				'mode' => 'create',
+				'userfields' => $this->getUserfieldsService()->GetFields('shopping_locations')
+			]);
+		}
+		else
+		{
+			return $this->renderPage($response, 'shoppinglocationform', [
+				'shoppinglocation' =>  $this->getDatabase()->shopping_locations($args['shoppingLocationId']),
+				'mode' => 'edit',
+				'userfields' => $this->getUserfieldsService()->GetFields('shopping_locations')
 			]);
 		}
 	}

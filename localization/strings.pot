@@ -79,6 +79,9 @@ msgstr ""
 msgid "Locations"
 msgstr ""
 
+msgid "Stores"
+msgstr ""
+
 msgid "Quantity units"
 msgstr ""
 
@@ -214,6 +217,9 @@ msgstr ""
 msgid "Create location"
 msgstr ""
 
+msgid "Create store"
+msgstr ""
+
 msgid "Create quantity unit"
 msgstr ""
 
@@ -245,6 +251,9 @@ msgid "Edit product"
 msgstr ""
 
 msgid "Edit location"
+msgstr ""
+
+msgid "Edit store"
 msgstr ""
 
 msgid "Record data"
@@ -317,6 +326,9 @@ msgid "Are you sure to delete product \"%s\"?"
 msgstr ""
 
 msgid "Are you sure to delete location \"%s\"?"
+msgstr ""
+
+msgid "Are you sure to delete store \"%s\"?"
 msgstr ""
 
 msgid "Manage API keys"
@@ -440,9 +452,6 @@ msgid "Recipes"
 msgstr ""
 
 msgid "Edit recipe"
-msgstr ""
-
-msgid "New recipe"
 msgstr ""
 
 msgid "Ingredients list"
@@ -725,7 +734,7 @@ msgstr ""
 msgid "When not set, you will get logged out at latest after 30 days"
 msgstr ""
 
-msgid "Filter by status"
+msgid "Status"
 msgstr ""
 
 msgid "Below min. stock amount"
@@ -1022,6 +1031,9 @@ msgstr ""
 msgid "You have to select a location"
 msgstr ""
 
+msgid "You have to select a store"
+msgstr ""
+
 msgid "List"
 msgstr ""
 
@@ -1055,7 +1067,7 @@ msgstr ""
 msgid "Changelog"
 msgstr ""
 
-msgid "will be multiplied a factor of %1$s to get %2$s"
+msgid "will be multiplied by a factor of %1$s to get %2$s"
 msgstr ""
 
 msgid "The given date is earlier than today, are you sure?"
@@ -1415,7 +1427,7 @@ msgstr ""
 msgid "assigned to %s"
 msgstr ""
 
-msgid "Filter by assignment"
+msgid "Assignment"
 msgstr ""
 
 msgid "Consume product on chore execution"
@@ -1743,4 +1755,58 @@ msgid "Recipe card"
 msgstr ""
 
 msgid "Group ingredients by their product group"
+msgstr ""
+
+msgid "Unknown store"
+msgstr ""
+
+msgid "Store"
+msgstr ""
+
+msgid "Transaction successfully undone"
+msgstr ""
+
+msgid "Default store"
+msgstr ""
+
+msgid "Consume this stock entry"
+msgstr ""
+
+msgid "Mark this stock entry as open"
+msgstr ""
+
+msgid "Mark this item as done"
+msgstr ""
+
+msgid "Edit this item"
+msgstr ""
+
+msgid "Delete this item"
+msgstr ""
+
+msgid "Show an icon if the product is already on the shopping list"
+msgstr ""
+
+msgid "Calories"
+msgstr ""
+
+msgid "By default the amount to be added to the shopping list is `needed amount - stock amount - shopping list amount` - when this is enabled, it is only checked against the stock amount, not against what is already on the shopping list"
+msgstr ""
+
+msgid "means %1$s per %2$s"
+msgstr ""
+
+msgid "Create inverse QU conversion"
+msgstr ""
+
+msgid "Create recipe"
+msgstr ""
+
+msgid "Save & continue to add ingredients and included recipes"
+msgstr ""
+
+msgid "Save & continue"
+msgstr ""
+
+msgid "Save & return to recipes"
 msgstr ""

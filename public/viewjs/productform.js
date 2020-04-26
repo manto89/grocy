@@ -169,7 +169,8 @@
 $('#barcode-taginput').tagsManager({
 	'hiddenTagListName': 'barcode',
 	'tagsContainer': '#barcode-taginput-container',
-	'tagClass': 'badge badge-secondary'
+	'tagClass': 'badge badge-secondary',
+	'delimiters': [13, 44]
 });
 
 if (Grocy.EditMode === 'edit')
@@ -422,4 +423,25 @@ $("#qu-conversion-add-button").on("click", function(e)
 {
 	Grocy.ProductEditFormRedirectUri = U("/quantityunitconversion/new?product=editobjectid");
 	$('#save-product-button').click();
+});
+
+$('#qu_id_purchase').blur(function(e) 
+{
+	// Preset the stock quantity unit with the purchase quantity unit, if the stock quantity unit is unset.
+	var QuIdStock = $('#qu_id_stock');
+	var QuIdPurchase = $('#qu_id_purchase');
+	if (QuIdStock[0].selectedIndex === 0 && QuIdPurchase[0].selectedIndex !== 0) {
+		QuIdStock[0].selectedIndex = QuIdPurchase[0].selectedIndex;
+		Grocy.FrontendHelpers.ValidateForm('product-form');
+	}
+});
+
+$(document).on("Grocy.BarcodeScanned", function(e, barcode, target)
+{
+	if (target != "#barcode-taginput")
+	{
+		return;
+	}
+	
+	$("#barcode-taginput").tagsManager("pushTag", barcode);
 });

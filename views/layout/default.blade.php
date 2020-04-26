@@ -243,6 +243,14 @@
 							</a>
 						</li>
 						@endif
+						@if(GROCY_FEATURE_FLAG_STOCK_PRICE_TRACKING)
+						<li data-nav-for-page="shoppinglocations" data-sub-menu-of="#top-nav-manager-master-data">
+							<a class="nav-link discrete-link" href="{{ $U('/shoppinglocations') }}">
+								<i class="fas fa-shopping-cart"></i>
+								<span class="nav-link-text">{{ $__t('Stores') }}</span>
+							</a>
+						</li>
+						@endif
 						<li data-nav-for-page="quantityunits" data-sub-menu-of="#top-nav-manager-master-data">
 							<a class="nav-link discrete-link" href="{{ $U('/quantityunits') }}">
 								<i class="fas fa-balance-scale"></i>
@@ -448,6 +456,7 @@
 	<script src="{{ $U('/node_modules/datatables.net-colreorder-bs4/js/colReorder.bootstrap4.min.js?v=', true) }}{{ $version }}"></script>
 	<script src="{{ $U('/node_modules/datatables.net-select/js/dataTables.select.min.js?v=', true) }}{{ $version }}"></script>
 	<script src="{{ $U('/node_modules/datatables.net-select-bs4/js/select.bootstrap4.min.js?v=', true) }}{{ $version }}"></script>
+	<script src="{{ $U('/node_modules/datatables.net-plugins/filtering/type-based/accent-neutralise.js?v=', true) }}{{ $version }}"></script>
 	<script src="{{ $U('/node_modules/timeago/jquery.timeago.js?v=', true) }}{{ $version }}"></script>
 	<script src="{{ $U('/node_modules', true) }}/timeago/locales/jquery.timeago.{{ $__t('timeago_locale') }}.js?v={{ $version }}"></script>
 	<script src="{{ $U('/node_modules/toastr/build/toastr.min.js?v=', true) }}{{ $version }}"></script>

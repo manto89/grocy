@@ -17,6 +17,9 @@
 			var jsonData = { };
 			jsonData.new_amount = jsonForm.new_amount;
 			jsonData.best_before_date = Grocy.Components.DateTimePicker.GetValue();
+			if (Grocy.FeatureFlags.GROCY_FEATURE_FLAG_STOCK_PRICE_TRACKING) {
+				jsonData.shopping_location_id = Grocy.Components.ShoppingLocationPicker.GetValue();
+			}
 			if (Grocy.FeatureFlags.GROCY_FEATURE_FLAG_STOCK_LOCATION_TRACKING)
 			{
 				jsonData.location_id = Grocy.Components.LocationPicker.GetValue();
@@ -84,6 +87,9 @@
 								$('#price').val('');
 								Grocy.Components.DateTimePicker.Clear();
 								Grocy.Components.ProductPicker.SetValue('');
+								if (Grocy.FeatureFlags.GROCY_FEATURE_FLAG_STOCK_PRICE_TRACKING) {
+									Grocy.Components.ShoppingLocationPicker.SetValue('');
+								}
 								Grocy.Components.ProductPicker.GetInputElement().focus();
 								Grocy.Components.ProductCard.Refresh(jsonForm.product_id);
 								Grocy.FrontendHelpers.ValidateForm('inventory-form');
@@ -149,7 +155,10 @@ Grocy.Components.ProductPicker.GetPicker().on('change', function(e)
 					$("#tare-weight-handling-info").addClass("d-none");
 				}
 
-				$('#price').val(productDetails.last_price);
+				$('#price').val(parseFloat(productDetails.last_price).toLocaleString({ minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+				if (Grocy.FeatureFlags.GROCY_FEATURE_FLAG_STOCK_PRICE_TRACKING) {
+					Grocy.Components.ShoppingLocationPicker.SetId(productDetails.last_shopping_location_id);
+				}
 				if (Grocy.FeatureFlags.GROCY_FEATURE_FLAG_STOCK_LOCATION_TRACKING)
 				{
 					Grocy.Components.LocationPicker.SetId(productDetails.location.id);

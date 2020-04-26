@@ -1,4 +1,6 @@
-﻿var shoppingListTable = $('#shoppinglist-table').DataTable({
+﻿var collapsedGroups = {};
+
+var shoppingListTable = $('#shoppinglist-table').DataTable({
 	'order': [[1, 'asc']],
 	"orderFixed": [[3, 'asc']],
 	'columnDefs': [
@@ -7,11 +9,33 @@
 		{ 'visible': false, 'targets': 3 }
 	],
 	'rowGroup': {
-		dataSrc: 3
+		dataSrc: 3,
+		startRender: function(rows, group)
+		{
+			var collapsed = !!collapsedGroups[group];
+			var toggleClass = collapsed ? "fa-caret-right" : "fa-caret-down";
+
+			rows.nodes().each(function(row)
+			{
+				row.style.display = collapsed ? "none" : "";
+			});
+
+			return $("<tr/>")
+				.append('<td colspan="' + rows.columns()[0].length + '">' + group + ' <span class="fa fa-fw ' + toggleClass + '"/></td>')
+				.attr("data-name", group)
+				.toggleClass("collapsed", collapsed);
+		}
 	}
 });
 $('#shoppinglist-table tbody').removeClass("d-none");
 shoppingListTable.columns.adjust().draw();
+
+$(document).on("click", "tr.dtrg-group", function()
+{
+	var name = $(this).data('name');
+	collapsedGroups[name] = !collapsedGroups[name];
+	shoppingListTable.draw();
+});
 
 $("#search").on("keyup", Delay(function()
 {
@@ -44,7 +68,7 @@ $("#selected-shopping-list").on("change", function()
 	window.location.href = U('/shoppinglist?list=' + value);
 });
 
-$(".status-filter-button").on("click", function()
+$(".status-filter-message").on("click", function()
 {
 	var value = $(this).data("status-filter");
 	$("#status-filter").val(value);
@@ -91,6 +115,10 @@ $("#delete-selected-shopping-list").on("click", function()
 $(document).on('click', '.shoppinglist-delete-button', function(e)
 {
 	e.preventDefault();
+
+	// Remove the focus from the current button
+	// to prevent that the tooltip stays until clicked anywhere else
+	document.activeElement.blur();
 
 	var shoppingListItemId = $(e.currentTarget).attr('data-shoppinglist-id');
 	Grocy.FrontendHelpers.BeginUiBusy();
@@ -173,6 +201,10 @@ $(document).on('click', '.shopping-list-stock-add-workflow-list-item-button', fu
 {
 	e.preventDefault();
 
+	// Remove the focus from the current button
+	// to prevent that the tooltip stays until clicked anywhere else
+	document.activeElement.blur();
+
 	var href = $(e.currentTarget).attr('href');
 
 	$("#shopping-list-stock-add-workflow-purchase-form-frame").attr("src", href);
@@ -247,6 +279,10 @@ $(document).on('click', '#shopping-list-stock-add-workflow-skip-button', functio
 $(document).on('click', '.order-listitem-button', function(e)
 {
 	e.preventDefault();
+
+	// Remove the focus from the current button
+	// to prevent that the tooltip stays until clicked anywhere else
+	document.activeElement.blur();
 
 	Grocy.FrontendHelpers.BeginUiBusy();
 

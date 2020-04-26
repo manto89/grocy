@@ -21,10 +21,13 @@
 
 @section('content')
 <div class="row">
-
+	<div class="col">
+		<h2 class="title">@yield('title')</h2>
+		<hr>
+	</div>
+</div>
+<div class="row">
 	<div class="col-lg-6 col-xs-12">
-		<h1>@yield('title')</h1>
-
 		<script>Grocy.EditMode = '{{ $mode }}';</script>
 
 		@if($mode == 'edit')
@@ -69,7 +72,9 @@
 
 			<div class="form-group tm-group">
 				<label for="barcode-taginput">{{ $__t('Barcode(s)') }}&nbsp;&nbsp;<i class="fas fa-barcode"></i></label>
-				<input type="text" class="form-control tm-input" id="barcode-taginput">
+				<div class="input-group">
+					<input type="text" class="form-control tm-input barcodescanner-input" id="barcode-taginput" data-target="#barcode-taginput">
+				</div>
 				<div id="barcode-taginput-container"></div>
 			</div>
 
@@ -86,6 +91,15 @@
 			</div>
 			@else
 			<input type="hidden" name="location_id" id="location_id" value="1">
+			@endif
+
+			@if(GROCY_FEATURE_FLAG_STOCK_PRICE_TRACKING)
+			@include('components.shoppinglocationpicker', array(
+				'label' => 'Default store',
+				'shoppinglocations' => $shoppinglocations
+			))
+			@else
+			<input type="hidden" name="shopping_location_id" id="shopping_location_id" value="1">
 			@endif
 
 			@php if($mode == 'edit') { $value = $product->min_stock_amount; } else { $value = 0; } @endphp
@@ -108,6 +122,7 @@
 				</div>
 			</div>
 
+			@if(GROCY_FEATURE_FLAG_STOCK_BEST_BEFORE_DATE_TRACKING)
 			@php if($mode == 'edit') { $value = $product->default_best_before_days; } else { $value = 0; } @endphp
 			@include('components.numberpicker', array(
 				'id' => 'default_best_before_days',
@@ -118,6 +133,7 @@
 				'hint' => $__t('For purchases this amount of days will be added to today for the best before date suggestion') . ' (' . $__t('-1 means that this product never expires') . ')'
 			))
 
+			@if(GROCY_FEATURE_FLAG_STOCK_PRODUCT_OPENED_TRACKING)
 			@php if($mode == 'edit') { $value = $product->default_best_before_days_after_open; } else { $value = 0; } @endphp
 			@include('components.numberpicker', array(
 				'id' => 'default_best_before_days_after_open',
@@ -127,6 +143,8 @@
 				'invalidFeedback' => $__t('The amount cannot be lower than %s', '-1'),
 				'hint' => $__t('When this product was marked as opened, the best before date will be replaced by today + this amount of days (a value of 0 disables this)')
 			))
+			@endif
+			@endif
 
 			<div class="form-group">
 				<label for="product_group_id">{{ $__t('Product group') }}</label>

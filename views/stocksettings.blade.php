@@ -6,9 +6,13 @@
 
 @section('content')
 <div class="row">
+	<div class="col">
+		<h2 class="title">@yield('title')</h2>
+		<hr>
+	</div>
+</div>
+<div class="row">
 	<div class="col-lg-6 col-xs-12">
-		<h1>@yield('title')</h1>
-
 		<div id="productpresets">
 			<h4>{{ $__t('Presets for new products') }}</h4>
 
@@ -74,6 +78,14 @@
 			'invalidFeedback' => $__t('This cannot be lower than %s', '1'),
 			'additionalCssClasses' => 'user-setting-control'
 		))
+
+		<div class="form-group">
+			<div class="checkbox">
+				<label for="show_icon_on_stock_overview_page_when_product_is_on_shopping_list">
+					<input type="checkbox" class="user-setting-control" id="show_icon_on_stock_overview_page_when_product_is_on_shopping_list" data-setting-key="show_icon_on_stock_overview_page_when_product_is_on_shopping_list"> {{ $__t('Show an icon if the product is already on the shopping list') }}
+				</label>
+			</div>
+		</div>
 
 		<a href="{{ $U('/stockoverview') }}" class="btn btn-success">{{ $__t('OK') }}</a>
 	</div>

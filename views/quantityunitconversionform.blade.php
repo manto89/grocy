@@ -10,9 +10,14 @@
 
 @section('content')
 <div class="row">
+	<div class="col">
+		<h2 class="title">@yield('title')</h2>
+		<hr>
+	</div>
+</div>
+<div class="row">
 	<div class="col-lg-6 col-xs-12">
-		<h1>@yield('title')</h1>
-		
+	
 		@if($product != null)
 		<h3 class="text-muted">{{ $__t('Override for product') }} <strong>{{ $product->name }}</strong></h3>
 		@else
@@ -36,7 +41,7 @@
 				<select required disabled class="form-control input-group-qu" id="from_qu_id" name="from_qu_id">
 					<option></option>
 					@foreach($quantityunits as $quantityunit)
-						<option @if(($product != null && $quantityunit->id == $product->qu_id_stock) || ($defaultQuUnit != null && $quantityunit->id == $defaultQuUnit->id))) selected="selected" @endif value="{{ $quantityunit->id }}">{{ $quantityunit->name }}</option>
+						<option @if(($product != null && $quantityunit->id == $product->qu_id_stock) || ($defaultQuUnit != null && $quantityunit->id == $defaultQuUnit->id))) selected="selected" @endif value="{{ $quantityunit->id }}" data-plural-form="{{ $quantityunit->name_plural }}">{{ $quantityunit->name }}</option>
 					@endforeach
 				</select>
 				<div class="invalid-feedback">{{ $__t('A quantity unit is required') }}</div>
@@ -64,6 +69,13 @@
 				'additionalHtmlElements' => '<p id="qu-conversion-info" class="form-text text-info d-none"></p>',
 				'additionalCssClasses' => 'input-group-qu'
 			))
+
+			<div class="checkbox @if($mode == 'edit') d-none @endif">
+				<label for="create_inverse">
+					<input type="checkbox" id="create_inverse" name="create_inverse:skip" checked> {{ $__t('Create inverse QU conversion') }}
+					<span id="qu-conversion-inverse-info" class="form-text text-info d-none"></span>
+				</label>
+			</div>
 
 			@include('components.userfieldsform', array(
 				'userfields' => $userfields,
